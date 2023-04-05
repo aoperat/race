@@ -1,15 +1,17 @@
+import {User} from './user.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const startGameButton = document.getElementById('start-game');
-    const gameContainer = document.getElementById('game-container');
-    const userList = document.getElementById('user-list');
-    const participantList = document.getElementById('participant-list');
-    const numberOfLosers = parseInt(document.getElementById('loser-count').value);
-    const applySettingsButton = document.getElementById('apply-settings');
+    let startGameButton = document.getElementById('start-game');
+    let gameContainer = document.getElementById('game-container');
+    let userList = document.getElementById('user-list');
+    let participantList = document.getElementById('participant-list');
+    let numberOfLosers = parseInt(document.getElementById('loser-count').value);
+    let applySettingsButton = document.getElementById('apply-settings');
 
     let finishedParticipants = [];
     
-    let users = await fetchUsers();
+    let users = await User.fetchUsers();
+
     let participants = [];
 
     applySettingsButton.addEventListener('click', () => {
@@ -20,10 +22,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             createRunner(user);
         });
 
-
-        const speedBoostCount = parseInt(document.getElementById('speed-boost-count').value);
-        const whirlwindCount = parseInt(document.getElementById('whirlwind-count').value);
-        const switchPlacesCount = parseInt(document.getElementById('switch-places-count').value);
+        let speedBoostCount = parseInt(document.getElementById('speed-boost-count').value);
+        let whirlwindCount = parseInt(document.getElementById('whirlwind-count').value);
+        let switchPlacesCount = parseInt(document.getElementById('switch-places-count').value);
 
         createPowerUps('speed-boost', speedBoostCount);
         createPowerUps('whirlwind', whirlwindCount);
@@ -33,9 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     displayQueue();
-    const speedBoostCount = parseInt(document.getElementById('speed-boost-count').value);
-    const whirlwindCount = parseInt(document.getElementById('whirlwind-count').value);
-    const switchPlacesCount = parseInt(document.getElementById('switch-places-count').value);
+    let speedBoostCount = parseInt(document.getElementById('speed-boost-count').value);
+    let whirlwindCount = parseInt(document.getElementById('whirlwind-count').value);
+    let switchPlacesCount = parseInt(document.getElementById('switch-places-count').value);
 
     createPowerUps('speed-boost', speedBoostCount);
     createPowerUps('whirlwind', whirlwindCount);
@@ -44,9 +45,73 @@ document.addEventListener('DOMContentLoaded', async () => {
     animatePowerUps();
 
 
+    function startCountdown() {
+        let countdownElement = document.getElementById('countdown');
+        let countdownValue = 3;
+      
+        let countdownInterval = setInterval(() => {
+          countdownElement.textContent = countdownValue;
+      
+          if (countdownValue <= 0) {
+            clearInterval(countdownInterval);
+            countdownElement.style.display = 'none';
+
+
+            participants.forEach((user, index) => {
+            
+                let gameContainer = document.querySelector('#game-container');
+                let runners = Array.from(gameContainer.querySelectorAll('.runner'));
+                runners.forEach((runner, index) => {
+                    runner.classList.remove('runner-shuffle-animation'); // Apply the shuffling animation
+                  });
+                
+                moveRunner(user, index);
+            });
+
+          } else {
+            shuffleRunners();
+          }
+      
+          countdownValue--;
+        }, 1000);
+      }
+      
+      function shuffleRunners() {
+        let gameContainer = document.querySelector('#game-container');
+        let runners = Array.from(gameContainer.querySelectorAll('.runner'));
+      
+        let availableBottomValues = [];
+        for (let i = 0; i < runners.length; i++) {
+          availableBottomValues.push(i * 60);
+        }
+      
+        // Shuffle availableBottomValues
+        for (let i = availableBottomValues.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [availableBottomValues[i], availableBottomValues[j]] = [availableBottomValues[j], availableBottomValues[i]];
+        }
+      
+        runners.forEach((runner, index) => {
+          runner.classList.add('runner-shuffle-animation'); // Apply the shuffling animation
+          runner.style.bottom = `${availableBottomValues[index]}px`;
+        });
+      }
+      
+      
+      
+      
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+      
+      
     function checkGameEndCondition() {
-        const numberOfParticipants = participants.length;
-        const numberOfWinnersNeeded = numberOfParticipants - numberOfLosers;
+        let numberOfParticipants = participants.length;
+        let numberOfWinnersNeeded = numberOfParticipants - numberOfLosers;
     
         if (finishedParticipants.length >= numberOfWinnersNeeded) {
             displayResults();
@@ -54,15 +119,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     startGameButton.addEventListener('click', () => {
-        participants.forEach((user, index) => {
-            moveRunner(user, index);
-        });
+
+        startCountdown();
+        
     });
 
     function displayQueue() {
         userList.innerHTML = '<h2>대기열</h2>';
         users.forEach(user => {
-            const userElement = document.createElement('div');
+            let userElement = document.createElement('div');
             userElement.classList.add('user');
             userElement.innerHTML = `
           <img src="${user.picture}" alt="${user.name}">
@@ -77,43 +142,58 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function animatePowerUps() {
-        
-
         setInterval(() => {
-
-            const powerUps = document.querySelectorAll('.power-up');
-            const directions = Array.from({ length: powerUps.length }, () => Math.random() < 0.5 ? -1 : 1);
-
-            powerUps.forEach((powerUp, index) => {
-                if (powerUp.style.display === 'none') return; // Skip hidden power-ups
-
-                const randomSpeed = Math.floor(Math.random() * 3) + 1; // Change 3 to adjust the speed range
+            let powerUps = document.querySelectorAll('.power-up');
+    
+            powerUps.forEach(powerUp => {
+                if (powerUp.style.display === 'none') return;
+    
+                if (!powerUp.classList.contains('fadeIn')) {
+                    powerUp.classList.add('fadeIn');
+                }
+    
+                let randomSpeed = Math.floor(Math.random() * 30) + 1;
                 let currentTop = parseInt(powerUp.style.top);
-                currentTop += directions[index] * randomSpeed;
-                powerUp.style.top = `${currentTop}%`;
-
-                if (currentTop >= 100 || currentTop <= 0) {
-                    directions[index] *= -1;
+                let newTop = currentTop + (Math.random() < 0.5 ? -randomSpeed : randomSpeed);
+    
+                // Calculate the maximum top position based on the game container's dimensions
+                let maxTop = gameContainer.clientHeight - powerUp.clientHeight;
+    
+                // Adjust newTop if it goes beyond the boundaries
+                if (newTop < 0) {
+                    newTop = 0;
+                } else if (newTop > maxTop) {
+                    newTop = maxTop;
+                }
+    
+                powerUp.style.transition = 'top 0.5s ease-out';
+                powerUp.style.top = `${newTop}px`;
+    
+                // Remove the power-up if it reaches the top boundary
+                if (newTop <= 0) {
+                    powerUp.classList.add('fadeOut');
+                    setTimeout(() => {
+                        powerUp.remove();
+                    }, 500);
                 }
             });
-        }, 50);
+        }, 1000);
     }
-      
-
+    
+    
 
     function addUserToParticipants(user) {
 
-        const maxRunners = Math.floor(gameContainer.clientHeight / 35);
+        let maxRunners = Math.floor(gameContainer.clientHeight / 60);
         if (participants.length >= maxRunners) {
             alert('Maximum number of runners reached.');
             return;
         }
-
         
         if (participants.includes(user)) return;
         participants.push(user);
         createRunner(user);
-        const participantElement = document.createElement('div');
+        let participantElement = document.createElement('div');
         participantElement.classList.add('participant');
         participantElement.innerHTML = `
         <img src="${user.picture}" alt="${user.name}">
@@ -132,88 +212,109 @@ document.addEventListener('DOMContentLoaded', async () => {
         displayQueue();
     }
 
-    async function fetchUsers() {
-        try {
-            const response = await fetch('users.json');
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error('Error fetching users:', error);
-            return [];
-        }
-    }
-
     function createRunner(user) {
-        const runner = document.createElement('div');
+        let runner = document.createElement('div');
         runner.classList.add('runner');
         runner.dataset.username = user.name;
         runner.style.left = '0';
-        runner.style.bottom = `${participants.indexOf(user) * 35}px`;
-
-        const runnerImage = document.createElement('img');
+        runner.style.bottom = `${participants.indexOf(user) * 60}px`;
+    
+        // Create a wrapper div for both images
+        let imageWrapper = document.createElement('div');
+        imageWrapper.style.position = 'relative';
+        imageWrapper.style.width = '100%';
+        imageWrapper.style.height = '100%';
+    
+        let runnerImage = document.createElement('img');
         runnerImage.src = user.picture;
         runnerImage.alt = user.name;
-        runnerImage.style.width = '100%';
-        runnerImage.style.height = '100%';
+        runnerImage.style.width = '60%';
+        runnerImage.style.height = '60%';
         runnerImage.style.borderRadius = '50%';
-
-        runner.appendChild(runnerImage);
+        runnerImage.style.position = 'absolute';
+        runnerImage.style.left = '12%';
+        runnerImage.style.top = '24%';
+        runnerImage.style.zIndex = '1';
+    
+        let snailImage = document.createElement('img');
+        snailImage.src = '/images/snail.gif';
+        snailImage.alt = 'Snail';
+        snailImage.style.width = '100%';
+        snailImage.style.height = '100%';
+        snailImage.style.position = 'absolute';
+        snailImage.style.zIndex = '0';
+    
+        imageWrapper.appendChild(runnerImage);
+        imageWrapper.appendChild(snailImage);
+        runner.appendChild(imageWrapper);
         gameContainer.appendChild(runner);
     }
+    
 
-
+    function applyPowerUp(powerUpType, runner) {
+        if (powerUpType === 'speed-boost') {
+            applyAnimation(runner, 'speed-boost-Ef');
+        } else if (powerUpType === 'whirlwind') {
+            applyAnimation(runner, 'whirlwind-Ef');
+        } else if (powerUpType === 'switch-places') {
+            applyAnimation(runner, 'switch-places-Ef');
+        }
+    }
+    
+    function applyAnimation(element, animationClass) {
+        element.classList.add(animationClass);
+        setTimeout(() => {
+            element.classList.remove(animationClass);
+        }, 1000);
+    }
+    
     function moveRunner(user) {
-        const runner = gameContainer.querySelector(`.runner[data-username="${user.name}"]`);
+        let runner = gameContainer.querySelector(`.runner[data-username="${user.name}"]`);
         if (!runner) return;
-
-        let currentPosition = parseInt(runner.style.left);
-        const targetPosition = gameContainer.clientWidth - runner.clientWidth;
-
-        const intervalId = setInterval(() => {
-            const randomSpeed = Math.floor(Math.random() * 10 * user.speed) + 1;
-
+    
+        let currentPosition = user.currentPosition;
+        let targetPosition = gameContainer.clientWidth - runner.clientWidth;
+    
+        let intervalId = setInterval(() => {
+            let randomSpeed = Math.floor(Math.random() * 10 * user.speed) + 1;
+    
             currentPosition += randomSpeed;
+            user.updatePosition(currentPosition);
             runner.style.left = `${currentPosition}px`;
-
-            const powerUpType = checkPowerUpCollision(runner);
+    
+            let powerUpType = checkPowerUpCollision(runner);
             if (powerUpType) {
                 if (powerUpType === 'speed-boost') {
                     currentPosition += 50;
+                    user.updatePosition(currentPosition);
                 } else if (powerUpType === 'whirlwind') {
-                    currentPosition = 0;
+                    currentPosition -= 100;
+                    user.updatePosition(currentPosition);
                     runner.style.left = `${currentPosition}px`;
                 } else if (powerUpType === 'switch-places') {
-                    const otherRunner = participants[Math.floor(Math.random() * participants.length)];
+                    let activeRunners = participants.filter(p => !finishedParticipants.includes(p));
+                    let otherRunner = activeRunners[Math.floor(Math.random() * activeRunners.length)];
+    
                     if (otherRunner !== user) {
-                        const otherRunnerElement = gameContainer.querySelector(`.runner[data-username="${otherRunner.name}"]`);
-                        const tempPosition = currentPosition;
-                        currentPosition = parseInt(otherRunnerElement.style.left);
+                        let otherRunnerElement = gameContainer.querySelector(`.runner[data-username="${otherRunner.name}"]`);
+                        let tempPosition = currentPosition;
+                        currentPosition = otherRunner.currentPosition;
+                        user.updatePosition(currentPosition);
+                        otherRunner.updatePosition(tempPosition);
                         otherRunnerElement.style.left = `${tempPosition}px`;
                     }
                 }
+                applyPowerUp(powerUpType, runner);
             }
-
+    
             if (currentPosition >= targetPosition) {
                 clearInterval(intervalId);
                 finishedParticipants.push(user);
                 console.log(`User ${user.name} has finished!`);
-                checkGameEndCondition(); // Call this function here to check the end condition after each user finishes
-
-
+                checkGameEndCondition(); 
             }
-
-        }, 100);
-
-    }
-
-    function checkForWinners() {
-        let numLosers = parseInt(document.getElementById("num-losers").value, 10);
-        let numFinishersNeeded = participants.length - numLosers;
     
-        if (finishedParticipants.length >= numFinishersNeeded) {
-            clearInterval(gameInterval);
-            displayResults();
-        }
+        }, 100);
     }
     
 
@@ -229,11 +330,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function checkPowerUpCollision(runner) {
-        const powerUps = document.querySelectorAll('.power-up');
+        let powerUps = document.querySelectorAll('.power-up');
 
-        for (const powerUp of powerUps) {
-            const runnerRect = runner.getBoundingClientRect();
-            const powerUpRect = powerUp.getBoundingClientRect();
+        for (let powerUp of powerUps) {
+            let runnerRect = runner.getBoundingClientRect();
+            let powerUpRect = powerUp.getBoundingClientRect();
 
             if (
                 runnerRect.left < powerUpRect.right &&
@@ -249,37 +350,52 @@ document.addEventListener('DOMContentLoaded', async () => {
                         : 'switch-places';
             }
         }
-
         return null;
     }
 
-
-
     function createPowerUps(type, count) {
         for (let i = 0; i < count; i++) {
-            const powerUp = document.createElement('div');
+            let powerUp = document.createElement('div');
             powerUp.className = `power-up ${type}`;
-            powerUp.textContent = type === 'speed-boost' ? 'S' : type === 'whirlwind' ? 'W' : 'C';
-            powerUp.style.top = `${10 + Math.random() * 80}%`;
+    
+            let icon = document.createElement('i');
+    
+            // Set the appropriate icon class for each power-up type
+            if (type === 'speed-boost') {
+                icon.className = 'fas fa-bolt'; // Lightning icon
+            } else if (type === 'whirlwind') {
+                icon.className = 'fas fa-wind'; // Wind icon
+            } else {
+                icon.className = 'fas fa-exchange-alt'; // Switch icon
+            }
+    
+            powerUp.appendChild(icon);
+    
+            // Calculate a more uniformly random top position based on the game container's dimensions
+            let maxTop = gameContainer.clientHeight * 0.9;
+            let randomTop = Math.floor(Math.random() * maxTop);
+    
+            powerUp.style.top = `${randomTop}px`;
             powerUp.style.left = `${10 + Math.random() * 80}%`;
             gameContainer.appendChild(powerUp);
         }
     }
+    
+
+    
 
     function resetGame() {
-        // Remove existing power-ups
-        const existingPowerUps = document.querySelectorAll('.power-up');
+        
+        let existingPowerUps = document.querySelectorAll('.power-up');
         existingPowerUps.forEach(powerUp => {
             powerUp.remove();
         });
-    
-        // Remove existing runners
-        const existingRunners = document.querySelectorAll('.runner');
+        
+        let existingRunners = document.querySelectorAll('.runner');
         existingRunners.forEach(runner => {
             runner.remove();
         });
-    
-        // Reset finishedParticipants array
+        
         finishedParticipants = [];
         animatePowerUps();
 
