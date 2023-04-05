@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Running Game</h1>
+
+
+        <div class="lists">
+            <div id="user-list">
+                <h2>Queue</h2>
+            </div>
+            <div id="participant-list">
+                <h2>Participants</h2>
+            </div>
+        </div>
+        <div class="settings">
+            <h3>Items</h3>
+            <div class="item-settings">
+                <div>
+                  <label for="speed-boost-count">Speed ​​Boosts:</label>
+                  <input type="number" id="speed-boost-count" value="3" min="1" max="10">
+                </div>
+                <div>
+                  <label for="whirlwind-count">Whirlwinds:</label>
+                  <input type="number" id="whirlwind-count" value="2" min="1" max="10">
+                </div>
+                <div>
+                  <label for="switch-places-count">Switch Places:</label>
+                  <input type="number" id="switch-places-count" value="2" min="1" max="10">
+                </div>
+              </div>
+              
+
+            <h3>Rules</h3>
+            <div class="rule-settings">
+                <div>
+                    <label for="loser-count">Number of Losers:</label>
+                    <input type="number" id="loser-count" value="2" min="1">
+                </div>
+                
+            </div>
+
+            <button id="apply-settings">Apply Settings</button>
+        </div>
+
+        <div id="game-container">
+        </div>
+
+        <button id="start-game">Start Game</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

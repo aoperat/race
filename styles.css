@@ -1,0 +1,160 @@
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.item-settings {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-settings div {
+    display: flex;
+    align-items: center;
+}
+
+.rule-settings {
+    display: flex;
+    flex-direction: column;
+}
+
+.rule-settings div {
+    display: flex;
+    align-items: center;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h2, h3 {
+    margin-bottom: 1rem;
+}
+
+.lists {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 2rem;
+}
+
+#user-list, #participant-list {
+    width: 100%;
+    max-width: 45%;
+    min-width: 300px;
+    margin-bottom: 1rem;
+}
+
+.settings {
+    margin-bottom: 2rem;
+}
+
+.item-settings, .rule-settings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+label {
+    font-weight: bold;
+}
+
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-color: lightgray;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.runner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: blue;
+    bottom: 0;
+    border-radius: 50%;
+}
+
+.user, .participant {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.user img, .participant img {
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.power-up {
+    position: absolute;
+    background-color: gold;
+    padding: 5px;
+    border-radius: 50%;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 반응형 스타일 추가 */
+@media (max-width: 600px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .settings,
+    .lists {
+        width: 100%;
+    }
+
+    #user-list,
+    #participant-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+
