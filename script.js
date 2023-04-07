@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             userElement.classList.add('user');
             userElement.innerHTML = `
           <img src="${user.picture}" alt="${user.name}">
-          <span>${user.name} - ${user.title}</span>
+          <span>${user.name}</span>
         `;
             userElement.addEventListener('click', () => {
                 addUserToParticipants(user);
