@@ -1,86 +1,92 @@
 [
     {
-    "name": "조예주",
-    "title": "부장",
-    "picture": "/images/user/조예주.png",
+    "name": "jyj",
+    "title": "bj",
+    "picture": "./images/user/jyj.png",
     "speed": 1
     },
     {
-    "name": "이규태",
-    "title": "과장",
-    "picture": "/images/user/이규태.png",
+    "name": "lgt",
+    "title": "kj",
+    "picture": "./images/user/lgt.png",
     "speed": 1
     },
     {
-    "name": "김준태",
-    "title": "과장",
-    "picture": "/images/user/김준태.png",
+    "name": "kjt",
+    "title": "kj",
+    "picture": "./images/user/kjt.png",
     "speed": 1
     },
     {
-    "name": "이종환",
-    "title": "대리",
-    "picture": "/images/user/이종환.png",
+    "name": "ljh",
+    "title": "dr",
+    "picture": "./images/user/ljh.png",
     "speed": 1
     },
     {
-    "name": "이영효",
-    "title": "대리",
-    "picture": "/images/user/이영효.png",
+    "name": "lyh",
+    "title": "dr",
+    "picture": "./images/user/lyh.png",
     "speed": 1
     },
     {
-    "name": "송지현",
-    "title": "대리",
-    "picture": "/images/user/송지현.png",
+    "name": "sjh",
+    "title": "dr",
+    "picture": "./images/user/sjh.png",
     "speed": 1
     },
     {
-    "name": "허신재",
-    "title": "대리",
-    "picture": "/images/user/허신재.png",
+    "name": "hsj",
+    "title": "dr",
+    "picture": "./images/user/hsj.png",
     "speed": 1
     },
     {
-    "name": "김민지",
-    "title": "대리",
-    "picture": "/images/user/김민지.png",
+    "name": "kmj",
+    "title": "dr",
+    "picture": "./images/user/kmj.png",
     "speed": 1
     },
     {
-    "name": "최지혜",
-    "title": "사원",
-    "picture": "/images/user/최지혜.png",
+    "name": "cjh",
+    "title": "sw",
+    "picture": "./images/user/cjh.png",
     "speed": 1
     },
     {
-    "name": "김준성",
-    "title": "사원",
-    "picture": "/images/user/김준성.png",
+    "name": "kjs",
+    "title": "sw",
+    "picture": "./images/user/kjs.png",
     "speed": 1
     },
     {
-    "name": "원재경",
-    "title": "사원",
-    "picture": "/images/user/원재경.png",
+    "name": "wjg",
+    "title": "sw",
+    "picture": "./images/user/wjg.png",
     "speed": 1
     },
     {
-    "name": "신용훈",
-    "title": "사원",
-    "picture": "/images/user/신용훈.png",
+    "name": "syh",
+    "title": "sw",
+    "picture": "./images/user/syh.png",
     "speed": 1
     },
     {
-    "name": "최다운",
-    "title": "사원",
-    "picture": "/images/user/최다운.png",
+    "name": "cdw",
+    "title": "sw",
+    "picture": "./images/user/cdw.png",
     "speed": 1
     },
     {
-    "name": "임진규",
-    "title": "사원",
-    "picture": "/images/user/임진규.png",
+    "name": "ljg",
+    "title": "sw",
+    "picture": "./images/user/ljg.png",
+    "speed": 1
+    },
+    {
+    "name": "ksy",
+    "title": "sw",
+    "picture": "./images/user/ksy.png",
     "speed": 1
     }
     ]

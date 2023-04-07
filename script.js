@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
     
         let snailImage = document.createElement('img');
-        snailImage.src = '/images/snail.gif';
+        snailImage.src = './images/snail.gif';
         snailImage.alt = 'Snail';
         snailImage.style.width = '100%';
         snailImage.style.height = '100%';
