@@ -2,91 +2,91 @@
     {
     "name": "jyj",
     "title": "bj",
-    "picture": "./images/user/jyj.png",
+    "picture": "./images/users/jyj.png",
     "speed": 1
     },
     {
     "name": "lgt",
     "title": "kj",
-    "picture": "./images/user/lgt.png",
+    "picture": "./images/users/lgt.png",
     "speed": 1
     },
     {
     "name": "kjt",
     "title": "kj",
-    "picture": "./images/user/kjt.png",
+    "picture": "./images/users/kjt.png",
     "speed": 1
     },
     {
     "name": "ljh",
     "title": "dr",
-    "picture": "./images/user/ljh.png",
+    "picture": "./images/users/ljh.png",
     "speed": 1
     },
     {
     "name": "lyh",
     "title": "dr",
-    "picture": "./images/user/lyh.png",
+    "picture": "./images/users/lyh.png",
     "speed": 1
     },
     {
     "name": "sjh",
     "title": "dr",
-    "picture": "./images/user/sjh.png",
+    "picture": "./images/users/sjh.png",
     "speed": 1
     },
     {
     "name": "hsj",
     "title": "dr",
-    "picture": "./images/user/hsj.png",
+    "picture": "./images/users/hsj.png",
     "speed": 1
     },
     {
     "name": "kmj",
     "title": "dr",
-    "picture": "./images/user/kmj.png",
+    "picture": "./images/users/kmj.png",
     "speed": 1
     },
     {
     "name": "cjh",
     "title": "sw",
-    "picture": "./images/user/cjh.png",
+    "picture": "./images/users/cjh.png",
     "speed": 1
     },
     {
     "name": "kjs",
     "title": "sw",
-    "picture": "./images/user/kjs.png",
+    "picture": "./images/users/kjs.png",
     "speed": 1
     },
     {
     "name": "wjg",
     "title": "sw",
-    "picture": "./images/user/wjg.png",
+    "picture": "./images/users/wjg.png",
     "speed": 1
     },
     {
     "name": "syh",
     "title": "sw",
-    "picture": "./images/user/syh.png",
+    "picture": "./images/users/syh.png",
     "speed": 1
     },
     {
     "name": "cdw",
     "title": "sw",
-    "picture": "./images/user/cdw.png",
+    "picture": "./images/users/cdw.png",
     "speed": 1
     },
     {
     "name": "ljg",
     "title": "sw",
-    "picture": "./images/user/ljg.png",
+    "picture": "./images/users/ljg.png",
     "speed": 1
     },
     {
     "name": "ksy",
     "title": "sw",
-    "picture": "./images/user/ksy.png",
+    "picture": "./images/users/ksy.png",
     "speed": 1
     }
     ]
