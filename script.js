@@ -13,7 +13,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     let users = await User.fetchUsers();
 
     let participants = [];
+    let runnersData = [];
 
+    let isGameEnd = false;
+    
     applySettingsButton.addEventListener('click', () => {
 
         resetGame();
@@ -62,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 let gameContainer = document.querySelector('#game-container');
                 let runners = Array.from(gameContainer.querySelectorAll('.runner'));
                 runners.forEach((runner, index) => {
-                    runner.classList.remove('runner-shuffle-animation'); // Apply the shuffling animation
+                    runner.classList.remove('runner-shuffle-animation'); 
                   });
                 
                 moveRunner(user, index);
@@ -79,27 +82,34 @@ document.addEventListener('DOMContentLoaded', async () => {
       function shuffleRunners() {
         let gameContainer = document.querySelector('#game-container');
         let runners = Array.from(gameContainer.querySelectorAll('.runner'));
-      
+    
         let availableBottomValues = [];
+        const containerHeight = gameContainer.clientHeight;
+        const runnerHeight = runners[0].clientHeight;
+        const minHeight = (containerHeight - runnerHeight * runners.length) / 2;
+    
         for (let i = 0; i < runners.length; i++) {
-          availableBottomValues.push(i * 60);
+            availableBottomValues.push(minHeight + i * runnerHeight);
         }
-      
-        // Shuffle availableBottomValues
+    
+        
         for (let i = availableBottomValues.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [availableBottomValues[i], availableBottomValues[j]] = [availableBottomValues[j], availableBottomValues[i]];
+            const j = Math.floor(Math.random() * (i + 1));
+            [availableBottomValues[i], availableBottomValues[j]] = [availableBottomValues[j], availableBottomValues[i]];
         }
-      
+        const sortedBottomValues = [...availableBottomValues].sort((a, b) => a - b);
+        const zIndexMapping = new Map(sortedBottomValues.map((value, index) => [value, index]));
+    
         runners.forEach((runner, index) => {
-          runner.classList.add('runner-shuffle-animation'); // Apply the shuffling animation
-          runner.style.bottom = `${availableBottomValues[index]}px`;
+            runner.classList.add('runner-shuffle-animation'); 
+            const bottomValue = availableBottomValues[index];
+            runner.style.bottom = `${bottomValue}px`;
+    
+            
+            const zIndex = zIndexMapping.get(bottomValue);
+            runner.style.zIndex = 100 - zIndex;
         });
-      }
-      
-      
-      
-      
+    }
       function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -107,7 +117,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         return array;
       }
-      
       
     function checkGameEndCondition() {
         let numberOfParticipants = participants.length;
@@ -119,9 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     startGameButton.addEventListener('click', () => {
-
         startCountdown();
-        
     });
 
     function displayQueue() {
@@ -156,10 +163,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 let currentTop = parseInt(powerUp.style.top);
                 let newTop = currentTop + (Math.random() < 0.5 ? -randomSpeed : randomSpeed);
     
-                // Calculate the maximum top position based on the game container's dimensions
+                
                 let maxTop = gameContainer.clientHeight - powerUp.clientHeight;
     
-                // Adjust newTop if it goes beyond the boundaries
+                
                 if (newTop < 0) {
                     newTop = 0;
                 } else if (newTop > maxTop) {
@@ -169,7 +176,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 powerUp.style.transition = 'top 0.5s ease-out';
                 powerUp.style.top = `${newTop}px`;
     
-                // Remove the power-up if it reaches the top boundary
+                
                 if (newTop <= 0) {
                     powerUp.classList.add('fadeOut');
                     setTimeout(() => {
@@ -179,8 +186,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }, 1000);
     }
-    
-    
 
     function addUserToParticipants(user) {
 
@@ -218,23 +223,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         runner.dataset.username = user.name;
         runner.style.left = '0';
         runner.style.bottom = `${participants.indexOf(user) * 60}px`;
+        runner.style.zIndex = 100-participants.indexOf(user)
     
-        // Create a wrapper div for both images
+        
         let imageWrapper = document.createElement('div');
         imageWrapper.style.position = 'relative';
         imageWrapper.style.width = '100%';
         imageWrapper.style.height = '100%';
     
-        let runnerImage = document.createElement('img');
-        runnerImage.src = user.picture;
-        runnerImage.alt = user.name;
-        runnerImage.style.width = '60%';
-        runnerImage.style.height = '60%';
-        runnerImage.style.borderRadius = '50%';
-        runnerImage.style.position = 'absolute';
-        runnerImage.style.left = '12%';
-        runnerImage.style.top = '24%';
-        runnerImage.style.zIndex = '1';
+        let runnerImage = document.createElement('div');
+        runnerImage.classList.add('runner-image');
+        runnerImage.style.backgroundImage = `url('${user.picture}')`;
+        runnerImage.style.backgroundSize = 'cover';
+        runnerImage.style.backgroundPosition = 'center';
+        
     
         let snailImage = document.createElement('img');
         snailImage.src = '/images/snail.gif';
@@ -249,7 +251,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         runner.appendChild(imageWrapper);
         gameContainer.appendChild(runner);
     }
-    
 
     function applyPowerUp(powerUpType, runner) {
         if (powerUpType === 'speed-boost') {
@@ -276,19 +277,42 @@ document.addEventListener('DOMContentLoaded', async () => {
         let targetPosition = gameContainer.clientWidth - runner.clientWidth;
     
         let intervalId = setInterval(() => {
-            let randomSpeed = Math.floor(Math.random() * 10 * user.speed) + 1;
+
+            if (runnersData.length > 0) {
+                
+                if(runnersData.length - runnersData.map(runnerData => runnerData.user.name).indexOf(user.name) <= numberOfLosers ){
+
+                    // console.log(`a:${runnersData.find(r => r.user.name === user.name).leftPosition}, b:${runnersData.at(-(numberOfLosers+1)).leftPosition}`)
+                    if(runnersData.find(r => r.user.name === user.name).leftPosition - runnersData.at(-(numberOfLosers+1)).leftPosition < -50) {
+                        user.speed = isGameEnd?0:1.5;
+                        console.log(runner)
+                        runner.querySelector(`img`).style.filter = `hue-rotate(-45deg) saturate(200%) brightness(120%)`;
+
+
+                    }
+
+                    
+                }
+                else if(runnersData.length - runnersData.map(runnerData => runnerData.user.name).indexOf(user.name) > numberOfLosers){
+                    runner.querySelector(`img`).style.removeProperty("filter");
+                    user.speed = isGameEnd?0: 1;
+                }
+                
+            }
+            
+            let randomSpeed = isGameEnd?0:((Math.floor(Math.random() * 10) + 1) *(user.speed));
     
             currentPosition += randomSpeed;
             user.updatePosition(currentPosition);
             runner.style.left = `${currentPosition}px`;
-    
+
             let powerUpType = checkPowerUpCollision(runner);
             if (powerUpType) {
                 if (powerUpType === 'speed-boost') {
-                    currentPosition += 50;
+                    currentPosition += 65;
                     user.updatePosition(currentPosition);
                 } else if (powerUpType === 'whirlwind') {
-                    currentPosition -= 100;
+                    currentPosition -= 200;
                     user.updatePosition(currentPosition);
                     runner.style.left = `${currentPosition}px`;
                 } else if (powerUpType === 'switch-places') {
@@ -307,10 +331,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 applyPowerUp(powerUpType, runner);
             }
     
+            updateRankings()
+
             if (currentPosition >= targetPosition) {
                 clearInterval(intervalId);
                 finishedParticipants.push(user);
                 console.log(`User ${user.name} has finished!`);
+                
                 checkGameEndCondition(); 
             }
     
@@ -318,15 +345,61 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
 
+    function updateRankings() {
+        
+    
+
+        runnersData=[];
+
+        participants.forEach(user => {
+            let runner = gameContainer.querySelector(`.runner[data-username="${user.name}"]`);
+            let leftPosition = parseInt(runner.style.left, 10);
+    
+            runnersData.push({
+                user: user,
+                leftPosition: leftPosition
+            });
+        });
+    
+        runnersData.sort((a, b) => b.leftPosition - a.leftPosition);
+    
+        let rankingMessage = "Real-time Rankings:\n";
+        runnersData.forEach((runnerData, index) => {
+            rankingMessage += `${index + 1}. ${runnerData.user.name}, `;
+        });
+    
+        // Update the ranking display element
+        // Example: Assuming you have a div with id="rankings" to show the ranking information
+        let rankingDisplay = document.getElementById('rankings');
+        rankingDisplay.innerHTML = rankingMessage;
+    }
+
+    
     function displayResults() {
+
+        isGameEnd = true;
+        
+
         let winners = finishedParticipants;
         let losers = participants.filter(p => !finishedParticipants.includes(p));
     
-        let winnersNames = winners.map(user => user.name).join(', ');
-        let losersNames = losers.map(user => user.name).join(', ');
+        let message = `Game Over!\n::Winners::\n`;
+
+        winners.forEach((winner, index) => {
+            message += ` ${index + 1}: ${winner.name}\n`;
+        });
+
+        message += `\n::Losers::\n`
+        losers.reverse().forEach((loser, index) => {
+            message += `${loser.name}\n`;
+        });
+
+        alert(`${message}`);
+        
+        participants.forEach(user => {
+            user.speed = 0;
+        });
     
-        alert(`Game Over!\nWinners: ${winnersNames}\nLosers: ${losersNames}`);
-        resetGame();
     }
 
     function checkPowerUpCollision(runner) {
@@ -360,18 +433,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     
             let icon = document.createElement('i');
     
-            // Set the appropriate icon class for each power-up type
             if (type === 'speed-boost') {
-                icon.className = 'fas fa-bolt'; // Lightning icon
+                icon.className = 'fas fa-bolt'; 
             } else if (type === 'whirlwind') {
-                icon.className = 'fas fa-wind'; // Wind icon
+                icon.className = 'fas fa-wind'; 
             } else {
-                icon.className = 'fas fa-exchange-alt'; // Switch icon
+                icon.className = 'fas fa-exchange-alt'; 
             }
     
             powerUp.appendChild(icon);
     
-            // Calculate a more uniformly random top position based on the game container's dimensions
             let maxTop = gameContainer.clientHeight * 0.9;
             let randomTop = Math.floor(Math.random() * maxTop);
     
@@ -380,9 +451,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             gameContainer.appendChild(powerUp);
         }
     }
-    
-
-    
 
     function resetGame() {
         

@@ -18,40 +18,41 @@
 
         <div class="lists">
             <div id="user-list">
-                <h2>Queue</h2>
+                <h2>대기열</h2>
             </div>
             <div id="participant-list">
-                <h2>Participants</h2>
+                <h2>참가열</h2>
             </div>
         </div>
         <div class="settings">
-            <h3>Items</h3>
+            <h3>아이템</h3>
             <div class="item-settings">
                 <div>
-                  <label for="speed-boost-count">Speed ​​Boosts:</label>
-                  <input type="number" id="speed-boost-count" value="6" min="0" max="12">
+                    <input type="number" id="speed-boost-count" value="6" min="0" max="20">
+                  <label for="speed-boost-count">스피트 부스터</label>
                 </div>
                 <div>
-                  <label for="whirlwind-count">Whirlwinds:</label>
-                  <input type="number" id="whirlwind-count" value="6" min="0" max="12">
+                    <input type="number" id="whirlwind-count" value="6" min="0" max="20">
+                  <label for="whirlwind-count">회오리 바람</label>
                 </div>
                 <div>
-                  <label for="switch-places-count">Switch Places:</label>
-                  <input type="number" id="switch-places-count" value="6" min="0" max="12">
+                    <input type="number" id="switch-places-count" value="6" min="0" max="20">
+                  <label for="switch-places-count">자석</label>
                 </div>
               </div>
 
-            <h3>Rules</h3>
+            <h3>규칙</h3>
             <div class="rule-settings">
                 <div>
-                    <label for="loser-count">Number of Losers:</label>
                     <input type="number" id="loser-count" value="2" min="1">
+                    <label for="loser-count"> 패배자 수</label>
                 </div>
                 
             </div>
 
-            <button id="apply-settings">Apply Settings</button>
+            <button id="apply-settings">적용</button>
         </div>
+        
 
         <div id="game-container">
             <!-- <div id="countdown" style="font-size: 100px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div> -->
@@ -59,7 +60,8 @@
 
         </div>
 
-        <button id="start-game">Start Game</button>
+        <button id="start-game">게임 시작</button>
+        <div id="rankings"> </div>
     </div>
     <script type="module" src="script.js"></script>
     
