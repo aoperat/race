@@ -1,92 +1,92 @@
 [
     {
-    "name": "jyj",
+    "name": "예주",
     "title": "bj",
-    "picture": "./images/users/jyj.png",
+    "picture": "./images/username/jyj.png",
     "speed": 1
     },
     {
-    "name": "lgt",
+    "name": "규태",
     "title": "kj",
-    "picture": "./images/users/lgt.png",
+    "picture": "./images/username/lgt.png",
     "speed": 1
     },
     {
-    "name": "kjt",
+    "name": "준태",
     "title": "kj",
-    "picture": "./images/users/kjt.png",
+    "picture": "./images/username/kjt.png",
     "speed": 1
     },
     {
-    "name": "ljh",
+    "name": "종환",
     "title": "dr",
-    "picture": "./images/users/ljh.png",
+    "picture": "./images/username/ljh.png",
     "speed": 1
     },
     {
-    "name": "lyh",
+    "name": "영효",
     "title": "dr",
-    "picture": "./images/users/lyh.png",
+    "picture": "./images/username/lyh.png",
     "speed": 1
     },
     {
-    "name": "sjh",
+    "name": "지현",
     "title": "dr",
-    "picture": "./images/users/sjh.png",
+    "picture": "./images/username/sjh.png",
     "speed": 1
     },
     {
-    "name": "hsj",
+    "name": "신재",
     "title": "dr",
-    "picture": "./images/users/hsj.png",
+    "picture": "./images/username/hsj.png",
     "speed": 1
     },
     {
-    "name": "kmj",
+    "name": "민지",
     "title": "dr",
-    "picture": "./images/users/kmj.png",
+    "picture": "./images/username/kmj.png",
     "speed": 1
     },
     {
-    "name": "cjh",
+    "name": "지혜",
     "title": "sw",
-    "picture": "./images/users/cjh.png",
+    "picture": "./images/username/cjh.png",
     "speed": 1
     },
     {
-    "name": "kjs",
+    "name": "준성",
     "title": "sw",
-    "picture": "./images/users/kjs.png",
+    "picture": "./images/username/kjs.png",
     "speed": 1
     },
     {
-    "name": "wjg",
+    "name": "재경",
     "title": "sw",
-    "picture": "./images/users/wjg.png",
+    "picture": "./images/username/wjg.png",
     "speed": 1
     },
     {
-    "name": "syh",
+    "name": "용훈",
     "title": "sw",
-    "picture": "./images/users/syh.png",
+    "picture": "./images/username/syh.png",
     "speed": 1
     },
     {
-    "name": "cdw",
+    "name": "다운",
     "title": "sw",
-    "picture": "./images/users/cdw.png",
+    "picture": "./images/username/cdw.png",
     "speed": 1
     },
     {
-    "name": "ljg",
+    "name": "진규",
     "title": "sw",
-    "picture": "./images/users/ljg.png",
+    "picture": "./images/username/ljg.png",
     "speed": 1
     },
     {
-    "name": "ksy",
+    "name": "승연",
     "title": "sw",
-    "picture": "./images/users/ksy.png",
+    "picture": "./images/username/ksy.png",
     "speed": 1
     }
     ]
