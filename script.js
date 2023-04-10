@@ -252,6 +252,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         gameContainer.appendChild(runner);
     }
 
+    function removeRunner(user) {
+        let runner = document.querySelector(`.runner[data-username="${user.name}"]`);
+        if (runner) {
+            gameContainer.removeChild(runner);
+        }
+    }
+    
+
     function applyPowerUp(powerUpType, runner) {
         if (powerUpType === 'speed-boost') {
             applyAnimation(runner, 'speed-boost-Ef');
