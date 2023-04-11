@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         createPowerUps('switch-places', switchPlacesCount);
 
         numberOfLosers = parseInt(document.getElementById('loser-count').value);
+
+        shuffleRunners();
     });
 
     startGameButton.addEventListener('click', () => {
