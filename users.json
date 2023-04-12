@@ -3,90 +3,90 @@
     "name": "예주",
     "title": "bj",
     "picture": "./images/username/jyj.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "규태",
     "title": "kj",
     "picture": "./images/username/lgt.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "준태",
     "title": "kj",
     "picture": "./images/username/kjt.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "종환",
     "title": "dr",
     "picture": "./images/username/ljh.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "영효",
     "title": "dr",
     "picture": "./images/username/lyh.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "지현",
     "title": "dr",
     "picture": "./images/username/sjh.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "신재",
     "title": "dr",
     "picture": "./images/username/hsj.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "민지",
     "title": "dr",
     "picture": "./images/username/kmj.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "지혜",
     "title": "sw",
     "picture": "./images/username/cjh.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "준성",
     "title": "sw",
     "picture": "./images/username/kjs.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "재경",
     "title": "sw",
     "picture": "./images/username/wjg.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "용훈",
     "title": "sw",
     "picture": "./images/username/syh.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "다운",
     "title": "sw",
     "picture": "./images/username/cdw.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "진규",
     "title": "sw",
     "picture": "./images/username/ljg.png",
-    "speed": 1
+    "speed": 0.8
     },
     {
     "name": "승연",
     "title": "sw",
     "picture": "./images/username/ksy.png",
-    "speed": 1
+    "speed": 0.8
     }
     ]

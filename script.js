@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     let finishedParticipants = [];
     let participants = [];
     let runnersData = [];
-
     let interverArr =[];
 
     let startGameButton = document.getElementById('start-game');
@@ -19,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let speedBoostCount = parseInt(document.getElementById('speed-boost-count').value);
     let whirlwindCount = parseInt(document.getElementById('whirlwind-count').value);
     let switchPlacesCount = parseInt(document.getElementById('switch-places-count').value);
+    const audioPlayer = document.getElementById("audioPlayer");
     let users = await User.fetchUsers();
 
     const gameConfig = {
@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (isGameEnd){
             
             applySettingsButton.click();
-            
             isGameEnd = false;
         }
         if (isGamePlaying) return;
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         participants.forEach(user => {
             user.updatePosition(0);
-            user.speed = gameConfig.runnerSpeed;
+            user.speed = user.speed;
             createRunner(user);
         });
 
@@ -189,7 +188,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         let currentPosition = user.currentPosition;
         let targetPosition = gameConfig.gameWidth - runner.clientWidth;
-
+        let runnerSpeed = user.speed;
 
         let intervalId = setInterval(() => {
             interverArr.push(intervalId);
@@ -199,17 +198,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (runnersData.length - runnerIndex <= numberOfLosers) {
 
                     if (runnersData.find(r => r.user.name === user.name).leftPosition - runnersData.at(-(numberOfLosers + 1)).leftPosition < -50) {
-                        user.speed = isGameEnd ? 0 : gameConfig.speedBoost;
+
+                        runnerSpeed = isGameEnd ? 0 : user.speed * gameConfig.speedBoost;
                         runner.querySelector(`img`).style.filter = `hue-rotate(-45deg) saturate(200%) brightness(120%)`;
                     }
                 }
                 else if (runnersData.length - runnerIndex > numberOfLosers) {
                     runner.querySelector(`img`).style.removeProperty("filter");
-                    user.speed = isGameEnd ? 0 : gameConfig.runnerSpeed;
+                    runnerSpeed = isGameEnd ? 0 : user.speed;
                 }
             }
 
-            let randomSpeed = isGameEnd ? 0 : ((Math.floor(Math.random() * 10) + 1) * (user.speed));
+            let randomSpeed = isGameEnd ? 0 : ((Math.floor(Math.random() * 10) + 1) * (runnerSpeed));
 
             currentPosition += randomSpeed;
             user.updatePosition(currentPosition);
@@ -384,6 +384,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function displayResults() {
 
         isGameEnd = true;
+        audioPlayer.pause();
 
         interverArr.forEach(interval => {
             clearInterval(interval);
@@ -425,6 +426,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 clearInterval(countdownInterval);
                 countdownElement.style.display = 'none';
 
+                
+                audioPlayer.play();
 
                 participants.forEach((user, index) => {
 
