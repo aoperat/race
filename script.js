@@ -2,10 +2,13 @@ import { User } from './user.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
 
+    let isGamePlaying = false;
     let isGameEnd = false;
     let finishedParticipants = [];
     let participants = [];
     let runnersData = [];
+
+    let interverArr =[];
 
     let startGameButton = document.getElementById('start-game');
     let gameContainer = document.getElementById('game-container');
@@ -33,10 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         resetGame();
 
-        participants.forEach(user => {
-            createRunner(user);
-        });
-
         let speedBoostCount = parseInt(document.getElementById('speed-boost-count').value);
         let whirlwindCount = parseInt(document.getElementById('whirlwind-count').value);
         let switchPlacesCount = parseInt(document.getElementById('switch-places-count').value);
@@ -51,6 +50,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     startGameButton.addEventListener('click', () => {
+
+        if (isGameEnd){
+            
+            applySettingsButton.click();
+            
+            isGameEnd = false;
+        }
+        if (isGamePlaying) return;
+        isGamePlaying = true;
         startCountdown();
     });
 
@@ -76,6 +84,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         existingRunners.forEach(runner => {
             runner.remove();
         });
+
+        participants.forEach(user => {
+            user.updatePosition(0);
+            user.speed = gameConfig.runnerSpeed;
+            createRunner(user);
+        });
+
+        
+        
 
         finishedParticipants = [];
         animatePowerUps();
@@ -133,11 +150,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     function addUserToParticipants(user) {
 
-        let maxRunners = Math.floor(gameConfig.gameHeight / 60);
-        if (participants.length >= maxRunners) {
-            alert('Maximum number of runners reached.');
-            return;
-        }
+        
 
         if (participants.includes(user)) return;
         participants.push(user);
@@ -177,8 +190,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         let currentPosition = user.currentPosition;
         let targetPosition = gameConfig.gameWidth - runner.clientWidth;
 
-        let intervalId = setInterval(() => {
 
+        let intervalId = setInterval(() => {
+            interverArr.push(intervalId);
             if (runnersData.length > 0) {
                 let runnerIndex = runnersData.map(runnerData => runnerData.user.name).indexOf(user.name);
 
@@ -187,15 +201,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (runnersData.find(r => r.user.name === user.name).leftPosition - runnersData.at(-(numberOfLosers + 1)).leftPosition < -50) {
                         user.speed = isGameEnd ? 0 : gameConfig.speedBoost;
                         runner.querySelector(`img`).style.filter = `hue-rotate(-45deg) saturate(200%) brightness(120%)`;
-
-
                     }
                 }
                 else if (runnersData.length - runnerIndex > numberOfLosers) {
                     runner.querySelector(`img`).style.removeProperty("filter");
                     user.speed = isGameEnd ? 0 : gameConfig.runnerSpeed;
                 }
-
             }
 
             let randomSpeed = isGameEnd ? 0 : ((Math.floor(Math.random() * 10) + 1) * (user.speed));
@@ -374,6 +385,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         isGameEnd = true;
 
+        interverArr.forEach(interval => {
+            clearInterval(interval);
+        });
 
         let winners = finishedParticipants;
         let losers = participants.filter(p => !finishedParticipants.includes(p));
@@ -394,6 +408,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         participants.forEach(user => {
             user.speed = 0;
         });
+
+        isGamePlaying = false;
 
     }
 
@@ -482,8 +498,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         userElement.appendChild(nameElement);
 
         userElement.addEventListener('click', () => {
-            addUserToParticipants(user);
-            userElement.remove();
+
+            let maxRunners = Math.floor(gameConfig.gameHeight / 60);
+            if (participants.length >= maxRunners) {
+                alert('Maximum number of runners reached.');
+                return;
+            }else{
+                addUserToParticipants(user);
+                userElement.remove();
+            }
+            
         });
 
         return userElement;
