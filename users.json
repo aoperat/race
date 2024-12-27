@@ -30,24 +30,6 @@
     "speed": 0.8
     },
     {
-    "name": "지현",
-    "title": "dr",
-    "picture": "./images/username/sjh.png",
-    "speed": 0.8
-    },
-    {
-    "name": "신재",
-    "title": "dr",
-    "picture": "./images/username/hsj.png",
-    "speed": 0.8
-    },
-    {
-    "name": "민지",
-    "title": "dr",
-    "picture": "./images/username/kmj.png",
-    "speed": 0.8
-    },
-    {
     "name": "지혜",
     "title": "sw",
     "picture": "./images/username/cjh.png",
@@ -81,6 +63,18 @@
     "name": "진규",
     "title": "sw",
     "picture": "./images/username/ljg.png",
+    "speed": 0.8
+    },
+    {
+    "name": "승연",
+    "title": "sw",
+    "picture": "./images/username/ksy.png",
+    "speed": 0.8
+    },
+    {
+    "name": "승연",
+    "title": "sw",
+    "picture": "./images/username/ksy.png",
     "speed": 0.8
     },
     {
